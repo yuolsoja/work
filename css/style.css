@@ -69,11 +69,11 @@ li {
     font-size: 10px;
     color: #fff;
 }
-.imeaxis-time{
+.timeaxis-time{
     line-height: 14px;
 }
 .timeaxis-info{
-    line-height: 16px;
+    line-height: 12px;
 }
 .waterfall{
     padding: 0 10px;
