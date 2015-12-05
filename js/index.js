@@ -12,11 +12,9 @@ $(function(){
      this.className="ac";
      }
      }
-
      function tab(){
      var timeLine=$('.timeline')[0];
      var timeLineWidth=timeLine.scrollWidth;
-
      }
      tab();*/
     var scroll = $('.js_timeline').MenuScrollPlugin({
