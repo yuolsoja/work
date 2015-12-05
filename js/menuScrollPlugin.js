@@ -4,9 +4,9 @@
      * 检测当前设置是否支持touch事件
      * @returns {boolean}
      */
-	function checkDriveSupportTouch(){
-		return 'ontouchstart' in w;
-	}
+    function checkDriveSupportTouch(){
+        return 'ontouchstart' in w;
+    }
 
 
     /**
@@ -66,20 +66,20 @@
      * 获取当前的水平偏移量
      */
     function getCurrentScroll(ele){
-        return ~~(ele.css('transform') || ele.css('-webkit-transform') || ele.css('-moz-transform') || ele.css('-ms-transform') || "").match(/[-\d]+/);
+        return ele.get(0).getBoundingClientRect().left;
     }
 
-	$.fn.MenuScrollPlugin = function(option){
-		option = $.extend({}, $.fn.MenuScrollPlugin.defaults, option);
+    $.fn.MenuScrollPlugin = function(option){
+        option = $.extend({}, $.fn.MenuScrollPlugin.defaults, option);
 
-		var items = this.find(option.itemsSelector),
+        var items = this.find(option.itemsSelector),
             itemsLength = items.length,
-			itemWrap = this.find(option.itemsWrapSelector),
+            itemWrap = this.find(option.itemsWrapSelector),
             eventName = (option.autoCheckMobile && checkDriveSupportTouch()) ? {
                 start: 'touchstart',
                 end: 'touchend',
                 move: 'touchmove',
-                click: 'click'
+                click: 'touchend'
             } : {
                 start: 'mousedown',
                 end: 'mouseup',
@@ -97,7 +97,7 @@
         if(option.isTauchDrag) {       //模拟拖动效果
             var originPos = null,
                 currentPos = null;
-            itemWrap.on(eventName.start,function(e){
+            this.on(eventName.start, option.itemsWrapSelector, function(e){
                 if(option.animateClass) itemWrap.removeClass(option.animateClass).offset();
                 originPos = getCoord(e);
                 var scrollX = getCurrentScroll(itemWrap);
@@ -112,7 +112,7 @@
              * @param e
              */
             function move(e){
-                if(!originPos) return;
+                if(!originPos) end();
                 checkisTrigger = true;
                 e.preventDefault();
                 currentPos = getCoord(e);
@@ -125,64 +125,71 @@
              * @param e
              */
             function end(e){
-                if(!e || !originPos || !checkisTrigger) return ;
-                var calc = calcCoord(getCoord(e), originPos);
-                setPosition(itemWrap, calc, limit);
+                if(e && originPos && checkisTrigger) {
+                    var calc = calcCoord(getCoord(e), originPos);
+                    setPosition(itemWrap, calc, limit);
+                }
                 if(option.animateClass) itemWrap.addClass(option.animateClass);
                 //重置数据
                 originPos = null;
                 currentPos = null;
-                checkisTrigger = false;
                 $document.off(eventName.move, move);
                 $document.off(eventName.end, end);
+                w.setTimeout(function(){
+                    checkisTrigger = false;
+                });
             }
         }
 
         //实现点击后，目标位置被选中
-        itemWrap.on(eventName.click,function(e){
-            if(checkisTrigger) return ;
-            var $target = $(e.target);
-            var $parent = $target.parents(option.itemsSelector);
-            if($target.is(option.itemsSelector) || $parent.length) {
-                itemWrap.addClass(option.animateClass);
-                $target = $parent.length ? $parent : $target;
-                if(!$target.hasClass(option.selectClassName)) {
-                    items.removeClass(option.selectClassName);
-                    $target.addClass(option.selectClassName);
+        this.on(eventName.click,option.itemsSelector,function(e){
+            if(checkisTrigger) return;
+            itemWrap.addClass(option.animateClass);
+            $target = $(e.currentTarget);
+            if(!$target.hasClass(option.selectClassName)) {
+                items.removeClass(option.selectClassName);
+                $target.addClass(option.selectClassName);
 
-                    var index = items.index($target);
-                    var offset = $target.get(0).getBoundingClientRect();
-                    var width = $target.width(),
-                        wWidth = $(window).width();
-                    var centerItem = offset.left + width /2;
-                    var climit = [-width/2, option.autoScrollCenter + width/2, wWidth - option.autoScrollCenter - width/2, wWidth + width/2];
-                    if((centerItem > climit[0] && centerItem< climit[1]) || (centerItem > climit[2] && centerItem<climit[3])) {
-                        var scrollX = Math.abs(getCurrentScroll(itemWrap));
-                        var tX = scrollX + offset.left + width /2;
-                        tX = wWidth/2  - tX;
-                        setPosition(itemWrap,{dx:tX}, limit);
-                    }
+                var index = items.index($target),
+                    baseOffset = itemWrap.get(0).getBoundingClientRect(),
+                    offset = $target.get(0).getBoundingClientRect(),
+                    width = offset.right - offset.left,
+                    wWidth = $(window).width();
+                var centerItem = offset.left  + width /2;
+                var climit = [option.autoScrollCenter + width/2, wWidth - option.autoScrollCenter - width/2];
+                if(centerItem < climit[0] || centerItem  > climit[1]) {
+                    var tX = centerItem - baseOffset.left;
+                    tX = wWidth/2  - tX;
+                    setPosition(itemWrap,{dx:tX}, limit);
+                }
 
-                    //判断位置，根据位置来滑动到中间位置
-                    if(typeof option.selectCallBack === 'function') {
-                        option.selectCallBack.apply($target,[e, index]);
-                    }
+                //判断位置，根据位置来滑动到中间位置
+                if(typeof option.selectCallBack === 'function') {
+                    option.selectCallBack.apply($target,[e, index]);
                 }
             }
         });
 
-        if(typeof option.currentIndex === 'number') items.eq(option.currentIndex).click();
-	};
 
-	$.fn.MenuScrollPlugin.defaults = {
-		currentIndex: 4,          //初始化时选中的项，处理默认选中项
-		selectCallBack: '',       //点中某一项时的回调函数
-		selectClassName: 'ac',     //标识当前选中项的类名
-		isTauchDrag: true,          //是否开启手动拖动功能
-		itemsSelector: 'li',        //条目选择器名称
-		itemsWrapSelector: 'ul',     //父类选择器名称
-		autoCheckMobile: true,       //是否自动检测设备是否支持touch事件，主要用来处理事件绑定
-        animateClass: 'animate',
-        autoScrollCenter: 30        //距离最近边最短距离，当小于这个距离时，才会自动滚动到中间
-	};
+        this.setIndex = function(index) {
+            if(typeof index === 'number') items.eq(index).trigger(eventName.click);
+            return this;
+        };
+
+        this.setIndex(option.currentIndex);
+
+        return this;
+    };
+
+    $.fn.MenuScrollPlugin.defaults = {
+        currentIndex: '',          //初始化时选中的项，处理默认选中项
+        selectCallBack: '',       //点中某一项时的回调函数
+        selectClassName: 'ac',     //标识当前选中项的类名
+        isTauchDrag: true,          //是否开启手动拖动功能
+        itemsSelector: 'li',        //条目选择器名称
+        itemsWrapSelector: 'ul',     //父类选择器名称
+        autoCheckMobile: true,       //是否自动检测设备是否支持touch事件，主要用来处理事件绑定
+        animateClass: 'animate',     //
+        autoScrollCenter: 25        //距离最近边最短距离，当小于这个距离时，才会自动滚动到中间
+    };
 })(Zepto, window);
