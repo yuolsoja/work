@@ -124,6 +124,7 @@ li {
     display: block;
     width: 100%;
     position: relative;
+    overflow: visible;
 }
 .tem_pic img {
     display: block;
