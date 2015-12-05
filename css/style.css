@@ -156,7 +156,7 @@ li {
     position: absolute;
     width: 23px;
     height: 23px;
-    background: url("../images/car.png")  no-repeat;
+    background: url("http://d9.yihaodianimg.com/N08/M02/6D/8D/ChEi1VZihHyAEogfAAAHPl3-Dlg43700.png")  no-repeat;
     background-size: cover;
     bottom: 30px;
     right: 0;
@@ -180,7 +180,7 @@ li {
     bottom: 30px;
     right: 0;
     z-index: 2000;
-    background: url("../images/car_gray.png")  no-repeat;
+    background: url("http://d9.yihaodianimg.com/N08/M05/6D/8D/ChEi1FZihIuAXh1jAAAHMOVlOB438100.png")  no-repeat;
     background-size: cover;
 }
 .not_start .bg_qiang{
