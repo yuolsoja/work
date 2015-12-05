@@ -53,7 +53,7 @@
         var targetX = tran.dx || 0;
         targetX = targetX < limit[0] ? limit[0] : targetX;
         targetX = targetX > limit[1] ? limit[1] : targetX;
-        targetX = 'translateX('+ parseInt(targetX,10) +'px)';
+        targetX = 'translateX('+ parseInt(targetX,10) +'px) translateZ(0px)';
         ele.css({
             '-webkit-transform': targetX,
             '-moz-transform': targetX,
