@@ -78,10 +78,12 @@ li {
 .waterfall{
     padding: 0 10px;
     margin: 0 auto;
+    overflow: visible;
 }
 .waterfall_box {
     padding: 0;
     margin: 0;
+    overflow: visible;
 }
 .waterfall_box li {
     width: 50%;
@@ -225,7 +227,7 @@ li {
     text-indent: 4px;
     left: -4px;
     height: 15px;
-    width: 52px;
+    width: 55px;
     line-height: 15px;
     font-size: 10px;
     background: #fc3e31;
