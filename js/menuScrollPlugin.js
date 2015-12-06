@@ -190,6 +190,6 @@
         itemsWrapSelector: 'ul',     //父类选择器名称
         autoCheckMobile: true,       //是否自动检测设备是否支持touch事件，主要用来处理事件绑定
         animateClass: 'animate',     //
-        autoScrollCenter: 25        //距离最近边最短距离，当小于这个距离时，才会自动滚动到中间
+        autoScrollCenter: 80        //距离最近边最短距离，当小于这个距离时，才会自动滚动到中间
     };
 })(Zepto, window);
