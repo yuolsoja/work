@@ -26,7 +26,7 @@ $(function(){
 
 
     var baseTime = Date.now(),lastIndex = '';
-    scroll.setIndex(getIndex(lastIndex = currentTime, timeLine));
+    scroll.setIndex(lastIndex = getIndex(currentTime, timeLine));
     var txt = scroll.find('.timeaxis-info');
     setInterval(function(){
         var currentNow = Date.now();
@@ -51,7 +51,4 @@ $(function(){
         }
         return 0;
     }
-
-
-
 });
