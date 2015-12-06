@@ -20,19 +20,18 @@ li {
     position: relative;
 }
 .MXC_timeline_inset {
-    overflow: hidden;
     background-color: #fff;
-    display: -webkit-box;
-    display: -webkit-flex;
-    display: -ms-flexbox;
-    display: flex;
+    /*display: -webkit-box;*/
+    /*display: -webkit-flex;*/
+    /*display: -ms-flexbox;*/
+    /*display: flex;*/
 }
 .MXC_timeline {
     overflow: hidden;
-    -webkit-box-flex: 1;
-    -webkit-flex: 1;
-    -ms-flex: 1;
-    flex: 1;
+    /*-webkit-box-flex: 1;*/
+    /*-webkit-flex: 1;*/
+    /*-ms-flex: 1;*/
+    /*flex: 1;*/
     border-bottom: 1px solid #fc3f43;
 }
 .MXC_timeline ul {
@@ -41,6 +40,7 @@ li {
     height: 36px;
     padding: 0;
     margin: 0;
+    float: left;
 }
 .MXC_timeline ul li {
     display: inline-block;

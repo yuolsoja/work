@@ -5,7 +5,7 @@ $(function(){
     var scroll = $('.js_timeline').MenuScrollPlugin({
         //回调函数，this是当前li,event事件对象，index为当前li的索引值
         selectCallBack: function(event, index){
-            console.log(this,index,event);
+            //console.log(this,index,event);
         }
     });
     var timeLine = [];
@@ -14,6 +14,11 @@ $(function(){
             index: i,
             time: new Date($(this).data('time')).getTime()
         });
+    });
+
+    timeLine.push({
+        index: timeLine.length,
+        time: new Date($(this).data('endtime')).getTime()
     });
 
     timeLine.sort(function(x, y){
@@ -43,12 +48,11 @@ $(function(){
     function getIndex(currentTime, timeLine){
         for(var i = 0, currentValue; currentValue = timeLine[i++];){
             if(currentTime < currentValue.time) {
-                return (currentValue.index - 1);
+                return timeLine[i-2] ? timeLine[i-2].index : '';
             }
         }
         if(i === (timeLine.length+1)) {
-            return (timeLine.length - 1);
+            return (timeLine[i-2].index);
         }
-        return 0;
     }
 });
