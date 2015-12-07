@@ -29,11 +29,10 @@ $(function(){
 
     var currentTime=new Date(scroll.find('ul').data('currenttime')).getTime();
 
-
     var baseTime = Date.now(),lastIndex = '';
     scroll.setIndex(lastIndex = getIndex(currentTime, timeLine));
     var txt = scroll.find('.timeaxis-info');
-    setInterval(function(){
+    setTimeout(function(){
         var currentNow = Date.now();
         var cTime = (currentNow - baseTime) + currentTime;
         var index = getIndex(cTime, timeLine);
