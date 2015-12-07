@@ -92,10 +92,10 @@ body{
     border-left: 1px solid #e0e0e0;
     border-bottom: 2px solid #e0e0e0;
 }
-.MXC_waterfall_box li img{
-    display: block;
-    width: 100%;
-}
+/*.MXC_waterfall_box li img{*/
+    /*display: block;*/
+    /*width: 100%;*/
+/*}*/
 .item_title {
     display: block;
     color: #3b3b3b;
@@ -114,10 +114,18 @@ body{
     text-decoration: none;
     -webkit-touch-callout: none;
 }
-.tem_pic img {
+.item_pic img {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+}
+.item_pic:after {
+    content: "";
     display: block;
     width: 100%;
-    height: auto;
+    height: 0;
+    padding-bottom: 100%;
 }
 .price {
     position: relative;
