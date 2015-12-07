@@ -2,17 +2,6 @@ body{
     padding: 0;
     margin: 0;
 }
-a {
-    text-decoration: none;
-    -webkit-touch-callout: none;
-}
-em,
-i {
-    font-style: normal;
-}
-li {
-    list-style: none;
-}
 .MXC_components-timeline {
     margin-bottom: 10px;
     color: #333;
@@ -33,6 +22,7 @@ li {
     padding: 0;
     margin: 0;
     float: left;
+    list-style: none;
 }
 .MXC_timeline ul li {
     display: inline-block;
@@ -43,6 +33,7 @@ li {
     list-style: none;
     padding: 5px 0 0 0;
     margin: 0;
+    list-style: none;
 }
 .timeaxis-item-inner {
     display: block;
@@ -111,6 +102,8 @@ li {
     line-height: 18px;
     font-size:14px;
     margin-top: 10px;
+    text-decoration: none;
+    -webkit-touch-callout: none;
 }
 
 .item_pic {
@@ -118,6 +111,8 @@ li {
     width: 100%;
     position: relative;
     overflow: visible;
+    text-decoration: none;
+    -webkit-touch-callout: none;
 }
 .tem_pic img {
     display: block;

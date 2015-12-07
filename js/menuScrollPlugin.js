@@ -113,6 +113,7 @@
              */
             function move(e){
                 if(!originPos) end();
+                //当move的时候不出发click事件
                 checkisTrigger = true;
                 e.preventDefault();
                 currentPos = getCoord(e);
