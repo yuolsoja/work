@@ -25,12 +25,16 @@ $(function(){
         if(x.time < y.time) return -1;
         return 0;
     });
-
+    //初始化状态
     var currentTime=new Date(scroll.find('ul').data('currenttime')).getTime();
-
     var baseTime = Date.now(),lastIndex = '';
     scroll.setIndex(lastIndex = getIndex(currentTime, timeLine));
+    var currentIndex =  getIndex(currentTime, timeLine)
     var txt = scroll.find('.timeaxis-info');
+    txt.slice(0 ,currentIndex).text('已结束');
+    txt.slice(currentIndex+1).text('未开始');
+    txt.eq(currentIndex).text('已开抢');
+
     setInterval(function(){
         var currentNow = Date.now();
         var cTime = (currentNow - baseTime) + currentTime;
