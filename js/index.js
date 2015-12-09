@@ -20,7 +20,6 @@ $(function(){
     //    index: timeLine.length,
     //    time: new Date($(this).data('endtime')).getTime()
     //});
-
     timeLine.sort(function(x, y){
         if(x.time > y.time) return 1;
         if(x.time < y.time) return -1;

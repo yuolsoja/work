@@ -1,7 +1,7 @@
 ;(function($, w){
 
     /**
-     * 检测当前设置是否支持touch事件
+     * 检测当前设置是否支持touch事件??
      * @returns {boolean}
      */
     function checkDriveSupportTouch(){
@@ -10,12 +10,11 @@
 
 
     /**
-     * 通过事件对象，来获取对应的相对位置度
+     * 通过事件对象，来获取对应的相对位置
      * @param e 事件对象e
      * @returns {*|void}
      */
-    function getCoord(e) {
-        var touches = e;
+    function getCoord(e) { var touches = e;
         if(e.touches && e.touches.length){
             touches = e.touches[0];
         }
@@ -40,7 +39,6 @@
             dy: tCoord.y - bCoord.y
         };
     }
-
 
     /**
      * 设置位置
@@ -119,6 +117,19 @@
                 currentPos = getCoord(e);
                 var calc = calcCoord(currentPos, originPos);
                 setPosition(itemWrap, calc, limit);
+
+                //function setPosition(ele, tran, limit){
+                //    var targetX = tran.dx || 0;
+                //    targetX = targetX < limit[0] ? limit[0] : targetX;
+                //    targetX = targetX > limit[1] ? limit[1] : targetX;
+                //    targetX = 'translateX('+ parseInt(targetX,10) +'px) translateZ(0px)';
+                //    ele.css({
+                //        '-webkit-transform': targetX,
+                //        '-moz-transform': targetX,
+                //        '-ms-transform': targetX,
+                //        'transform': targetX
+                //    });
+                //}
             }
 
             /**
@@ -171,7 +182,6 @@
             }
         });
 
-
         this.setIndex = function(index) {
             if(typeof index === 'number') items.eq(index).trigger(eventName.click);
             return this;
@@ -183,7 +193,7 @@
     };
 
     $.fn.MenuScrollPlugin.defaults = {
-        currentIndex: '',          //初始化时选中的项，处理默认选中项
+        currentIndex: 0,          //初始化时选中的项，处理默认选中项
         selectCallBack: '',       //点中某一项时的回调函数
         selectClassName: 'ac',     //标识当前选中项的类名
         isTauchDrag: true,          //是否开启手动拖动功能
