@@ -13,8 +13,7 @@
      * @param e 事件对象e
      * @returns {*|void}
      */
-    function getCoord(e) {
-        var touches = e;
+    function getCoord(e) { var touches = e;
         if(e.touches && e.touches.length){
             touches = e.touches[0];
         }
@@ -226,7 +225,7 @@
     };
 
     $.fn.MenuScrollPlugin.defaults = {
-        currentIndex: '',          //初始化时选中的项，处理默认选中项
+        currentIndex: 0,          //初始化时选中的项，处理默认选中项
         selectCallBack: '',       //点中某一项时的回调函数
         selectClassName: 'ac',     //标识当前选中项的类名
         isTauchDrag: true,          //是否开启手动拖动功能
