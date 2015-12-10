@@ -1,16 +1,15 @@
 ;(function($, w){
 
     /**
-     * 检测当前设置是否支持touch事件
+     * 检测当前设置是否支持touch事件??
      * @returns {boolean}
      */
     function checkDriveSupportTouch(){
         return 'ontouchstart' in w;
     }
 
-
     /**
-     * 通过事件对象，来获取对应的相对位置度
+     * 通过事件对象，来获取对应的相对位置
      * @param e 事件对象e
      * @returns {*|void}
      */
@@ -29,8 +28,53 @@
     }
 
     /**
+     * 获取事件对象的位置，有两个判断？？？
+     * @param event 事件对象
+     * @returns {{x: (*|number|Number), y: (*|Number|number)}}
+     */
+    function getPosition(event) {
+        var touches = event;
+        if(event.touches&&event.touches.length){
+            touches = event.touches[0];
+        }
+        if(event.changedTouches&&event.changedTouches.length){
+            touches = event.changedTouches[0];
+        }
+        return {
+            x : touches.clientX,
+            y : touches.clientY
+        }
+    }
+
+    /**
+     * 这个是getCoor的烦写模式，应该采取上面的写法
+     * @param event
+     * @returns {{x: (*|number|Number), y: (*|Number|number)}}
+     */
+    function getCoord1(event) {
+        var touches = event;
+        if(event.touches.length==1) {
+            switch (event.type) {
+                case "touchstart" :
+                    touches = event.touches[0];
+                    break;
+                case "touchend" :
+                    touches = event.changedTouches[0];
+                    break;
+                case "touchmove" :
+                    touches = event.changedTouches[0];
+                    break;
+            }
+        }
+        return {
+            x: touches.clientX,
+            y: touches.clientY
+        }
+    }
+
+    /**
      * 计算两个坐标差值
-     * @param tCoord 目标度坐标
+     * @param tCoord 目标坐标
      * @param bCoord 基准坐标
      * @returns {{dx: number, dy: number}}
      */
@@ -40,7 +84,6 @@
             dy: tCoord.y - bCoord.y
         };
     }
-
 
     /**
      * 设置位置
@@ -66,6 +109,7 @@
      * 获取当前的水平偏移量
      */
     function getCurrentScroll(ele){
+        //getBoundingClientRect()获取对象四个边距距离页面的距离document的距离
         return ele.get(0).getBoundingClientRect().left;
     }
 
@@ -130,7 +174,7 @@
                     var calc = calcCoord(getCoord(e), originPos);
                     setPosition(itemWrap, calc, limit);
                 }
-                if(option.animateClass) itemWrap.addClass(option.animateClass);
+                if(option.animateClass) itemWrap.addClass(option.animateClass);//此处不懂
                 //重置数据
                 originPos = null;
                 currentPos = null;
@@ -170,7 +214,6 @@
                 }
             }
         });
-
 
         this.setIndex = function(index) {
             if(typeof index === 'number') items.eq(index).trigger(eventName.click);
